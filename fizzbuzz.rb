@@ -2,20 +2,23 @@
 class FizzBuzz
   FIZZ = 'Fizz'
   BUZZ = 'Buzz'
+  FIZZBUZZ = FIZZ + BUZZ
   FIZZ_NUMBER = 3
   BUZZ_NUMBER = 5
 
   def initialize(number)
     @number = number
-    @evaluation = ''
   end
 
   def evaluate
-    add_non_fizzbuzz if non_fizzbuzz?
-    add_buzz if is_buzz?
-    add_fizz if is_fizz?
+    evaluation = {
+      is_fizz? => FIZZ,
+      is_buzz? => BUZZ,
+      is_fizzbuzz? => FIZZBUZZ
+    }
+    evaluation.default = @number.to_s
 
-    @evaluation
+    evaluation[true]
   end
 
   private
@@ -30,6 +33,10 @@ class FizzBuzz
 
   def add_fizz
     @evaluation.prepend(FIZZ)
+  end
+
+  def is_fizzbuzz?
+    is_fizz? && is_buzz?
   end
 
   def non_fizzbuzz?
